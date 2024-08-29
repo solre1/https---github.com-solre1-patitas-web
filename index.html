@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./estilocss.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    
+</head>
+
+<body>
+    <form action="" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre">
+        </div>
+        <div>
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha">
+        </div>
+        <div>
+            <label for="contenido">Contenido:</label>
+            <input type="text" id="contenido" name="contenido">
+        </div>
+        <div>
+            <label for="foto">Foto: </label>
+            <input type="text" id="foto" name="foto">
+        </div>
+        <div>
+            <button>Guardar</button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <img id="puchaina"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5bwjPIyGEzpVwlV_7gFYHEIYxFhV1wudxZQ&s"
+        alt="puchaina">
+    <script>
+        const form = document.querySelector("form")
+        form.addEventListener("submit", (ev) => {
+            ev.preventDefault()
+            fetch("guardar.php", {
+                method: "POST",
+                body: new FormData(form)
+            }).then(solicitud => solicitud.json())
+                .then(
+                    resultado => {
+                        if (resultado.respuesta == "ok") {
+
+                            confetti({
+                                particleCount: 100,
+                                spread: 70,
+                                origin: { y: 0.6 },
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                                footer: '<a href="#">Why do I have this issue?</a>'
+                              });}
+                    }
+                )
+        })
+
+    </script>
+</body>
+
+</html>
